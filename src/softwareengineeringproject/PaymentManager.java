@@ -10,11 +10,20 @@ package softwareengineeringproject;
  * @author cmpun
  */
 public class PaymentManager {
+    ICardReader card_reader;
+    IAuthorizationCenter auth_center;
+	public PaymentManager() {
+		card_reader = new CardReader();
+		auth_center = new AuthorizationCenter();
+	}
+	public PaymentManager(IAuthorizationCenter auth, ICardReader cardReader) {
+		this.card_reader = cardReader;
+		auth_center = auth;
+	}
+   // CardReader card_reader = new CardReader();
+    IBillCoinReader cash_reader = new BillCoinReader();
     
-    CardReader card_reader = new CardReader();
-    BillCoinReader cash_reader = new BillCoinReader();
     
-    AuthorizationCenterInterface auth_center = new AuthorizationCenterInterface();
     
     public String[] CardPayment(double Total){
         

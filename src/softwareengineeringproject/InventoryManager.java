@@ -107,7 +107,7 @@ public class InventoryManager {
                     found = true;
                     item.setPrice(updated_item.Price);
                     item.setDiscount(updated_item.Discount);
-                    item.setIsAlcohol(updated_item.isAlcohol);
+                    item.setIsAlcohol(updated_item.isAlcohol());
                 }
             }
             

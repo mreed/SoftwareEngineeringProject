@@ -31,9 +31,9 @@ public class ReceiptPrinter {
             //---------
             System.out.println("=====================");
         
-            System.out.println("Subtotal: " + Total);
-            System.out.println("Tax: " + (Total * 0.08f));
-            System.out.println("Total: " + tax_total);
+            System.out.println(String.format("Subtotal: %.2f", Total));
+            System.out.println(String.format("Tax:  %.2f", Total * 0.08f));
+            System.out.println(String.format("Total: %.2f", tax_total));
         
             String last_four = "";
         

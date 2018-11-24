@@ -18,11 +18,11 @@ public class Inventory {
     
     private ArrayList<Item> Items = new ArrayList<Item>(); 
     
-     //Creates Inventoty.
+     //Creates Inventory.
      public Inventory(String create) throws Exception{
          
         //Get the File.
-        File file = new File("C:\\Users\\cmpun\\Desktop\\SoftwareEngineeringProject\\src\\softwareengineeringproject\\DatabaseFile.txt");
+        File file = new File("./src/softwareengineeringproject/DatabaseFile.txt");
          
         BufferedReader br = new BufferedReader(new FileReader(file)); 
   
@@ -50,7 +50,7 @@ public class Inventory {
             Items.add(new Item(Name, Price, IsAlcohol, Discount, Quantity));
             
         }
-         
+        br.close();
      }
      
      public Inventory(){}
@@ -62,10 +62,10 @@ public class Inventory {
      public void UpdateInventory(ArrayList<Item> Items){
          
          try{
-            FileWriter fileWriter = new FileWriter("C:\\Users\\cmpun\\Desktop\\SoftwareEngineeringProject\\src\\softwareengineeringproject\\DatabaseFile.txt");
+            FileWriter fileWriter = new FileWriter("./src/softwareengineeringproject/DatabaseFile.txt");
             
             for(Item item : Items){
-                fileWriter.write(item.Name + "," + item.Price + "," + item.isAlcohol + "," + item.Discount + "," + item.Quantity + "\n");
+                fileWriter.write(item.Name + "," + item.Price + "," + item.isAlcohol() + "," + item.Discount + "," + item.Quantity + "\n");
             }
             
             fileWriter.close();

@@ -74,7 +74,7 @@ public class ItemScanner {
                             
                             if(item.Name.equals(selection)){
                              
-                                if(!item.isAlcohol){
+                                if(!item.isAlcohol()){
                                     selectedItems.add(item);
                                 }else{
                                     

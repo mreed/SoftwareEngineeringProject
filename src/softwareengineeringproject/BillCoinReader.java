@@ -12,9 +12,13 @@ package softwareengineeringproject;
 
 import java.util.Scanner;
 
-public class BillCoinReader {
+public class BillCoinReader implements IBillCoinReader {
     
-    public boolean GetPayment(double Total){
+    /* (non-Javadoc)
+	 * @see softwareengineeringproject.IBillCoinReader#GetPayment(double)
+	 */
+    @Override
+	public boolean GetPayment(double Total){
         
         Scanner scan = new Scanner(System.in);
         int menu_option;
@@ -101,12 +105,20 @@ public class BillCoinReader {
         
     }
     
-    public void DispenseChange(double amount){
+    /* (non-Javadoc)
+	 * @see softwareengineeringproject.IBillCoinReader#DispenseChange(double)
+	 */
+    @Override
+	public void DispenseChange(double amount){
         //Give user change back.
         System.out.println("Your change: " + amount);
     }
     
-    public void Insufficient(double total_entered){
+    /* (non-Javadoc)
+	 * @see softwareengineeringproject.IBillCoinReader#Insufficient(double)
+	 */
+    @Override
+	public void Insufficient(double total_entered){
         System.out.println("Insufienct amount. Here is your " + total_entered + " back.");
     }
     

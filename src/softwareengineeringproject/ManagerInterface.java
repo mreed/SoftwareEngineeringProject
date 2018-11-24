@@ -72,7 +72,7 @@ public class ManagerInterface {
             System.out.println("Price: " + retrievedItem.Price);
             System.out.println("Quantity in stock: " + retrievedItem.Quantity);
             System.out.println("Discount percent: " + retrievedItem.Discount);
-            System.out.println("Description (Is Alcohol): " + retrievedItem.isAlcohol);
+            System.out.println("Description (Is Alcohol): " + retrievedItem.isAlcohol());
             
             //Ask for the information to change in the item.
             System.out.print("Which information do you want to change?\n"
@@ -94,7 +94,7 @@ public class ManagerInterface {
                         break;
                         
                 case 3: System.out.print("Enter new description (Is Alcohol if true): ");
-                        retrievedItem.isAlcohol = scan.nextBoolean();
+                        retrievedItem.setAlcohol(scan.nextBoolean());
                         break;
                 
                 default: System.out.println("Invalid input!!");
@@ -107,7 +107,7 @@ public class ManagerInterface {
             System.out.println("Price: " + retrievedItem.Price);
             System.out.println("Quantity in stock: " + retrievedItem.Quantity);
             System.out.println("Discount percent: " + retrievedItem.Discount);
-            System.out.println("Description (Is Alcohol): " + retrievedItem.isAlcohol);
+            System.out.println("Description (Is Alcohol): " + retrievedItem.isAlcohol());
             
             //Update the item in the DB.
             inventory_manager.UpdateDatabase(retrievedItem);
@@ -140,7 +140,7 @@ public class ManagerInterface {
             System.out.println("Price: " + retrievedItem.Price);
             System.out.println("Quantity in stock: " + retrievedItem.Quantity);
             System.out.println("Discount percent: " + retrievedItem.Discount);
-            System.out.println("Description (Is Alcohol): " + retrievedItem.isAlcohol);
+            System.out.println("Description (Is Alcohol): " + retrievedItem.isAlcohol());
         
         } else{
             System.out.println("Item not found!!!!");

@@ -11,10 +11,14 @@ package softwareengineeringproject;
  */
 
 import java.util.Scanner;
-public class AuthorizationCenterInterface {
+public class AuthorizationCenter implements IAuthorizationCenter {
     
     
-    public String Verify(String cardNumber, int PIN, double Total){
+    /* (non-Javadoc)
+	 * @see softwareengineeringproject.IAuthorizationCenter#Verify(java.lang.String, int, double)
+	 */
+    @Override
+	public String Verify(String cardNumber, int PIN, double Total){
         
         Scanner scan = new Scanner(System.in);
         int approval;

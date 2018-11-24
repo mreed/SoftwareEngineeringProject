@@ -12,9 +12,9 @@ package softwareengineeringproject;
 
 import java.util.Scanner;
 
-public class CardReader {
+public class CardReader implements ICardReader {
     
-    //Returns an array of string, on the firs index has card type and on the second it has card number.
+    //Returns an array of string, on the first index has card type and on the second it has card number.
     public String[] GetCardInfo(){
         
         String[] cardInfo = new String[2];
