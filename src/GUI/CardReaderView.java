@@ -37,10 +37,6 @@ public class CardReaderView extends View implements ICardReader {
 
 	}
 
-	private void OnOk(ActionEvent x) {
-		dialogOked = true;
-	}
-
 	@Override
 	public int Debit() {
 		 String result = JOptionPane.showInputDialog(frame,

@@ -1,6 +1,6 @@
-Milk,2.5,false,0,124
-Sausage,2.25,false,0,19
+Milk,2.5,false,0,121
+Sausage,2.25,false,0,18
 Budlight,1.25,true,0,2000
-BudIce,2.5,true,0,42
-Coconut,4.0,false,0,102
-Wine,7.0,true,0,101
+BudIce,2.5,true,0,40
+Coconut,4.0,false,0,101
+Wine,7.0,true,0,100

@@ -43,7 +43,7 @@ public class ChooseItemToScan extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public ChooseItemToScan(String[] items) {
+	public ChooseItemToScan(String[] items,boolean allowNewItems) {
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -55,8 +55,10 @@ public class ChooseItemToScan extends JDialog {
 		contentPanel.add(lblSelectItemTo);
 		
 		selectItemDDL = new JComboBox(items);
+		if(allowNewItems) {
+			selectItemDDL.setEditable(true);
+		}
 		
-		selectItemDDL.setEditable(false);
 		selectItemDDL.setBounds(10, 53, 414, 31);
 		selectItemDDL.addActionListener(e -> OnSelectItem(e));
 		contentPanel.add(selectItemDDL);

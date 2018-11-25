@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 
 import softwareengineeringproject.CheckoutCart;
 import softwareengineeringproject.Client;
+import softwareengineeringproject.IBillCoinReader;
 import softwareengineeringproject.ICardReader;
 import softwareengineeringproject.InventoryManager;
 import softwareengineeringproject.Item;
@@ -27,14 +28,16 @@ public class CheckOutManager extends Controller {
 	private CheckoutCart cart;
 	private PaymentManager paymentManager;
 	private ICardReader cardReader;
+	private IBillCoinReader billCoinReader;
 	private SelectPaymentMethodView selectPaymentMethodView;
     private TransactionManager transaction_manager;
     
 	public CheckOutManager(Client client) {
 		super(client);
 		cardReader = new CardReaderView(client.GetFrame());
+		billCoinReader = new BillCoinReaderView(client.GetFrame());
 		AuthorizationCenterView auth = new AuthorizationCenterView(client.GetFrame());
-		paymentManager = new PaymentManager(auth,cardReader);
+		paymentManager = new PaymentManager(auth,cardReader,billCoinReader);
 		transaction_manager = new TransactionManager();
 	}
 	@Override
@@ -80,19 +83,46 @@ public class CheckOutManager extends Controller {
               
 	            //Save the transaction log.
 	        transaction_manager.StoreTransaction(cart.getItems(), cart.Total());
+	        HideAllViews();
 			welcomeView.Show();
 		}
 		else {
 			JOptionPane.showMessageDialog(client.GetFrame(),"Your card was denied. Please try another payment method.");
+			HideAllViews();
 			OnPay(null);
 		}
 	}
-
+	private void HideAllViews() {
+		if(welcomeView != null)
+			welcomeView.Hide();
+		if(selectPaymentMethodView != null)
+			selectPaymentMethodView.Hide();
+		if(scanItemsView != null) {
+			scanItemsView.Hide();
+		}
+		
+	}
 	private void OnPayWithCash(ActionEvent e) {
-		paymentManager.CashPayment(cart.SubTotal());
+		boolean result = paymentManager.CashPayment(cart.SubTotal());
+		if(!result) { //did not pay.{
+			HideAllViews();
+			OnPay(null);
+		}
+		//they paid with cash successfully
+		JOptionPane.showMessageDialog(client.GetFrame(),"Payment complete. Thank you for shopping with us.");
+		ReceiptPrinter receiptPrinter = new ReceiptPrinter();
+		 //print receipt
+		receiptPrinter.PrintReceipt(cart.getItems(), cart.SubTotal(), "----", "----");
+		//update inventory
+		inventoryManager.UpdateDatabaseCustomer(cart.getItems());
+         
+           //Save the transaction log.
+       transaction_manager.StoreTransaction(cart.getItems(), cart.Total());
+       HideAllViews();
+		welcomeView.Show();
 	}
 	private void OnCancelPayment(ActionEvent e) {
-		selectPaymentMethodView.Hide();
+		HideAllViews();
 		scanItemsView.Show();
 	}
 	private void OnSubTotal(ActionEvent x) {
@@ -117,7 +147,7 @@ public class CheckOutManager extends Controller {
 			itemNames.add(t.getName());
 		}
 		String[] itemNameArray = new String[itemNames.size()];
-		dialog = new ChooseItemToScan(itemNames.toArray(itemNameArray));
+		dialog = new ChooseItemToScan(itemNames.toArray(itemNameArray),false);
 		dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		dialog.getOkButton().addActionListener(x -> OnItemFound(x));
 		dialog.getCancelButton().addActionListener(x -> OnCancelItemSearch(x));

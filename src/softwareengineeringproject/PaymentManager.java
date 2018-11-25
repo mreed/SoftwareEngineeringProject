@@ -11,20 +11,19 @@ package softwareengineeringproject;
  */
 public class PaymentManager {
     ICardReader card_reader;
+    IBillCoinReader cash_reader;
     IAuthorizationCenter auth_center;
 	public PaymentManager() {
 		card_reader = new CardReader();
 		auth_center = new AuthorizationCenter();
+		cash_reader = new BillCoinReader();
 	}
-	public PaymentManager(IAuthorizationCenter auth, ICardReader cardReader) {
+	public PaymentManager(IAuthorizationCenter auth, ICardReader cardReader, IBillCoinReader billCoinReader) {
 		this.card_reader = cardReader;
 		auth_center = auth;
+		this.cash_reader = billCoinReader;
 	}
-   // CardReader card_reader = new CardReader();
-    IBillCoinReader cash_reader = new BillCoinReader();
-    
-    
-    
+
     public String[] CardPayment(double Total){
         
         //Get the card info.

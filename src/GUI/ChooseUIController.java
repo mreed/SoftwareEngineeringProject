@@ -18,11 +18,17 @@ public class ChooseUIController extends Controller {
 		 view.Display();
 		 view.getCustomerInterfaceButton()
 		 	.addActionListener(e -> OnChooseCustomerInterface(e));
+		 view.getRestockerInterfaceButton()
+		 	.addActionListener(e -> OnChooseRestockerInterface(e));
 		 
 	}
 	public void OnChooseCustomerInterface(ActionEvent e) {
 		view.Hide();
 		client.ShowCustomerInterface();
+	}
+	public void OnChooseRestockerInterface(ActionEvent e) {
+		view.Hide();
+		client.ShowRestockerInterface();
 	}
 
 }
