@@ -3,7 +3,7 @@ package GUI;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import softwareengineeringproject.IAuthorizationCenter;
+import Interfaces.IAuthorizationCenter;
 
 public class AuthorizationCenterView extends View implements IAuthorizationCenter {
 

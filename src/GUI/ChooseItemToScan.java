@@ -10,7 +10,7 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import softwareengineeringproject.Item;
+import BusinessLogic.Item;
 
 import javax.swing.JLabel;
 import javax.swing.JComboBox;

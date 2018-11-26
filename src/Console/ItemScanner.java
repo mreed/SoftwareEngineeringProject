@@ -3,15 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package softwareengineeringproject;
+package Console;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import BusinessLogic.Inventory;
+import BusinessLogic.Item;
+import Interfaces.IItemScanner;
+import Interfaces.IOnItemNameScanned;
+import Interfaces.IOnItemsScanned;
 /**
  *
  * @author cmpun
  */
-public class ItemScanner {
+public class ItemScanner implements IItemScanner {
     
+	ArrayList<IOnItemsScanned> itemListeners = new ArrayList<IOnItemsScanned>();
+	ArrayList<IOnItemNameScanned> nameListeners = new ArrayList<IOnItemNameScanned>();
     //Item objects.
     ArrayList<Item> selectedItems = new ArrayList<Item>();  
     ArrayList<Item> allItems = new ArrayList<Item>(); 
@@ -20,7 +28,11 @@ public class ItemScanner {
     ArrayList<String> itemNames = new ArrayList<String>();
     ArrayList<Double> itemPrices = new ArrayList<Double>();
     
-    public ArrayList<Item> scanItems(){
+    /* (non-Javadoc)
+	 * @see Console.IItemScanner#scanItems()
+	 */
+    @Override
+	public void scanItems(){
         
         Scanner scan = new Scanner(System.in);
         CashierInterface cashier = new CashierInterface();
@@ -33,7 +45,7 @@ public class ItemScanner {
    
         
             //Get the name and price of the items
-            for(Item item : allItems ){ itemNames.add(item.Name); }
+            for(Item item : allItems ){ itemNames.add(item.getName()); }
         
             String selection;
         
@@ -44,8 +56,8 @@ public class ItemScanner {
                 System.out.println("===============");
                 
                 for(Item item : allItems ){
-                    if(item.Quantity > 0){
-                        System.out.println("  " + item.Name + " " + item.Price);
+                    if(item.getQuantity() > 0){
+                        System.out.println("  " + item.getName() + " " + item.getPrice());
                     }
                 }
                 
@@ -65,14 +77,14 @@ public class ItemScanner {
                 } else if(selection.equals("1")){
                     GetSubtotalPrice(selectedItems);
                 } else if(selection.equals("2")){
-                    return null;
+                    return;
                 } else{
                 
                     if(itemNames.contains(selection)){
                         //Look for the item with the name.
                         for(Item item : allItems){
                             
-                            if(item.Name.equals(selection)){
+                            if(item.getName().equals(selection)){
                              
                                 if(!item.isAlcohol()){
                                     selectedItems.add(item);
@@ -97,10 +109,14 @@ public class ItemScanner {
         
         } catch(Exception E){
             System.out.println("Problem while retrieving database!");
-            return null;
+            return;
         }
-   
-        return selectedItems;
+        finally {
+        	scan.close();
+        }
+        for(IOnItemsScanned listener : itemListeners) {
+        	listener.OnItemsScanned(selectedItems);
+        }
         
     }
     
@@ -110,9 +126,9 @@ public class ItemScanner {
         
         for(Item item : scanned){ 
             
-            System.out.println(item.Name);
+            System.out.println(item.getName());
             
-            total_price += item.Price; 
+            total_price += item.getPrice(); 
         }
         
         System.out.println("\nThe subtotal is: " + (total_price + (total_price * 0.08f)) + "\n");
@@ -121,7 +137,11 @@ public class ItemScanner {
     
     
     //This method return name of items that we are going to restock.
-    public ArrayList<String> ScanInventoryItems(ArrayList<Item> inventoryItems){
+    /* (non-Javadoc)
+	 * @see Console.IItemScanner#ScanInventoryItems(java.util.ArrayList)
+	 */
+    @Override
+	public void ScanInventoryItems(ArrayList<Item> inventoryItems){
         
         Scanner scan = new Scanner(System.in);
         
@@ -134,7 +154,7 @@ public class ItemScanner {
             
             //Show the items of the inventory.. Name - Quantity.
             for(Item item : inventoryItems){
-                System.out.println(item.Name + " " + item.Quantity);
+                System.out.println(item.getName() + " " + item.getQuantity());
             }
         
             System.out.print("Enter Name of item to be restocked: ");
@@ -150,8 +170,22 @@ public class ItemScanner {
             
         }
         
-        return names;
+        for(IOnItemNameScanned listener: nameListeners) {
+        	listener.OnItemNameScanned(names);
+        }
         
     }
+
+	@Override
+	public void addScanItemListener(IOnItemsScanned listener) {
+		itemListeners.add(listener);
+		
+	}
+
+	@Override
+	public void addNameScanListener(IOnItemNameScanned listener) {
+		nameListeners.add(listener);
+		
+	}
     
 }

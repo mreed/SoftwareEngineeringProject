@@ -7,7 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import GUI.View;
-import softwareengineeringproject.ICardReader;
+import Interfaces.ICardReader;
 
 public class CardReaderView extends View implements ICardReader {
 

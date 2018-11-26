@@ -5,7 +5,7 @@ import javax.swing.JOptionPane;
 
 import com.sun.javafx.binding.StringFormatter;
 
-import softwareengineeringproject.IBillCoinReader;
+import Interfaces.IBillCoinReader;
 
 
 public class BillCoinReaderView extends View implements IBillCoinReader {

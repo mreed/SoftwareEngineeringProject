@@ -3,7 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package softwareengineeringproject;
+package BusinessLogic;
+
+import Console.AuthorizationCenter;
+import Console.BillCoinReader;
+import Console.CardReader;
+import Interfaces.IAuthorizationCenter;
+import Interfaces.IBillCoinReader;
+import Interfaces.ICardReader;
 
 /**
  *

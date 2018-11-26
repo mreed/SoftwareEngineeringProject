@@ -2,7 +2,7 @@ package GUI;
 
 import javax.swing.*;
 
-import softwareengineeringproject.RestockerInterface;
+import Console.RestockerInterface;
 
 public class ChooseUIView extends View {
 	private JButton customerInterfaceButton;

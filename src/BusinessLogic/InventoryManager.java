@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package softwareengineeringproject;
+package BusinessLogic;
 
 /**
  *
@@ -12,19 +12,24 @@ package softwareengineeringproject;
 
 import java.util.ArrayList;
 
-public class InventoryManager {
+import Console.ItemScanner;
+import Console.RestockerInterface;
+import Interfaces.IItemScanner;
+import Interfaces.IOnItemNameScanned;
+
+public class InventoryManager implements IOnItemNameScanned {
     
     
     ArrayList<Item> Items = new ArrayList<Item>();
     
-    ItemScanner itemScanner = new ItemScanner();
+    IItemScanner itemScanner = new ItemScanner();
     
     RestockerInterface restockerInterface = new RestockerInterface();
-    
+    public InventoryManager() {
+    	itemScanner.addNameScanListener(this);
+    }
     public void ScanItems(){
-        
-        ArrayList<String> scannedItems = new ArrayList<String>();
-        ArrayList<String> itemNames = new ArrayList<String>();
+
        
         try{
             
@@ -32,53 +37,73 @@ public class InventoryManager {
             Inventory inventory = new Inventory("create");
             Items = inventory.getInventory();
             
-            //Get the names of the items that we have in inventory.
-            for(Item item : Items){
-                itemNames.add(item.Name);
-            }
             
             //Get the items to scan from the scanner (we receive the name of the items.)
-            scannedItems = itemScanner.ScanInventoryItems(Items);
+            itemScanner.ScanInventoryItems(Items);
             
-            for(String name : scannedItems){
-                
-                //Name is in the list of items that we have in inventory.
-                if(itemNames.contains(name)){
-                    
-                    //Go to the item with that name, and get the new quantity.
-                    for(Item item : Items){
-                        if(item.Name.equals(name)){
-                            item.Quantity += restockerInterface.getQuantity(name);
-                            restockerInterface.DisplayQuantity(item.Name, item.Quantity);
-                        }
-                    }
-                    
-                }else{
-                    
-                    //Get the new item information.
-                    String[] info = restockerInterface.getNewItemInfo(name);
-                    
-                    //String Name, double Price, boolean isAlcohol, int Discount, int Quantity
-                    
-                    double P = Double.parseDouble(info[0]);
-                    int Q = Integer.parseInt(info[1]);
-                    boolean Des = Boolean.parseBoolean(info[2]);
-                    int Dis = Integer.parseInt(info[3]);
-                    
-                    Items.add(new Item(name, P, Des, Dis, Q));
-                    
-                    
-                }
-                
-            }
-            
-            UpdateDatabase(Items);
+           
             
         }catch(Exception E){
             System.out.println("Exception " + E.getMessage());
         }
         
-    }
+    } 
+    @Override
+	public void OnItemNameScanned(ArrayList<String> scannedItems) {
+    	  
+          ArrayList<String> itemNames = new ArrayList<String>();
+         
+          try{
+              
+              //Pull the list of Items from the database, by creating an instance of Inventory.
+              Inventory inventory = new Inventory("create");
+              Items = inventory.getInventory();
+              
+              //Get the names of the items that we have in inventory.
+              for(Item item : Items){
+                  itemNames.add(item.Name);
+              }
+
+              
+              for(String name : scannedItems){
+                  
+                  //Name is in the list of items that we have in inventory.
+                  if(itemNames.contains(name)){
+                      
+                      //Go to the item with that name, and get the new quantity.
+                      for(Item item : Items){
+                          if(item.Name.equals(name)){
+                              item.Quantity += restockerInterface.getQuantity(name);
+                              restockerInterface.DisplayQuantity(item.Name, item.Quantity);
+                          }
+                      }
+                      
+                  }else{
+                      
+                      //Get the new item information.
+                      String[] info = restockerInterface.getNewItemInfo(name);
+                      
+                      //String Name, double Price, boolean isAlcohol, int Discount, int Quantity
+                      
+                      double P = Double.parseDouble(info[0]);
+                      int Q = Integer.parseInt(info[1]);
+                      boolean Des = Boolean.parseBoolean(info[2]);
+                      int Dis = Integer.parseInt(info[3]);
+                      
+                      Items.add(new Item(name, P, Des, Dis, Q));
+                      
+                      
+                  }
+                  
+              }
+              
+              UpdateDatabase(Items);
+              
+          }catch(Exception E){
+              System.out.println("Exception " + E.getMessage());
+          }
+		
+	}
     
     //Updates an item given a list of items
     public void UpdateDatabase(ArrayList<Item> items){
@@ -175,6 +200,8 @@ public class InventoryManager {
         UpdateDatabase(allItems);
         
     }
+
+	
     
     
 }

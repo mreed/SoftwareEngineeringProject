@@ -7,8 +7,8 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import softwareengineeringproject.CheckoutCart;
-import softwareengineeringproject.Item;
+import BusinessLogic.CheckoutCart;
+import BusinessLogic.Item;
 
 public class SelectPaymentMethodView extends View {
 	private JTable table;

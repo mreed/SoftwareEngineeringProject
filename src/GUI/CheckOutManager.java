@@ -8,15 +8,15 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
-import softwareengineeringproject.CheckoutCart;
+import BusinessLogic.CheckoutCart;
+import BusinessLogic.InventoryManager;
+import BusinessLogic.Item;
+import BusinessLogic.PaymentManager;
+import BusinessLogic.ReceiptPrinter;
+import BusinessLogic.TransactionManager;
+import Interfaces.IBillCoinReader;
+import Interfaces.ICardReader;
 import softwareengineeringproject.Client;
-import softwareengineeringproject.IBillCoinReader;
-import softwareengineeringproject.ICardReader;
-import softwareengineeringproject.InventoryManager;
-import softwareengineeringproject.Item;
-import softwareengineeringproject.PaymentManager;
-import softwareengineeringproject.ReceiptPrinter;
-import softwareengineeringproject.TransactionManager;
 
 
 

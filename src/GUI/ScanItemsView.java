@@ -9,7 +9,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
-import softwareengineeringproject.Item;
+import BusinessLogic.Item;
 
 public class ScanItemsView extends View {
 
