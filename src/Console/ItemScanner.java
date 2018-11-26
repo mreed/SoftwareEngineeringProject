@@ -16,10 +16,8 @@ import Interfaces.IOnItemsScanned;
  *
  * @author cmpun
  */
-public class ItemScanner implements IItemScanner {
-    
-	ArrayList<IOnItemsScanned> itemListeners = new ArrayList<IOnItemsScanned>();
-	ArrayList<IOnItemNameScanned> nameListeners = new ArrayList<IOnItemNameScanned>();
+public class ItemScanner extends IItemScanner {
+
     //Item objects.
     ArrayList<Item> selectedItems = new ArrayList<Item>();  
     ArrayList<Item> allItems = new ArrayList<Item>(); 
@@ -114,7 +112,7 @@ public class ItemScanner implements IItemScanner {
         finally {
         	scan.close();
         }
-        for(IOnItemsScanned listener : itemListeners) {
+        for(IOnItemsScanned listener : this.itemScannedListeners) {
         	listener.OnItemsScanned(selectedItems);
         }
         
@@ -170,22 +168,11 @@ public class ItemScanner implements IItemScanner {
             
         }
         
-        for(IOnItemNameScanned listener: nameListeners) {
+        for(IOnItemNameScanned listener: this.namesScannedListeners) {
         	listener.OnItemNameScanned(names);
         }
         
     }
 
-	@Override
-	public void addScanItemListener(IOnItemsScanned listener) {
-		itemListeners.add(listener);
-		
-	}
-
-	@Override
-	public void addNameScanListener(IOnItemNameScanned listener) {
-		nameListeners.add(listener);
-		
-	}
     
 }

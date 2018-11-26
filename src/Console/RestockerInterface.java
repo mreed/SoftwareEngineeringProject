@@ -5,6 +5,8 @@
  */
 package Console;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author cmpun
@@ -12,7 +14,11 @@ package Console;
 
 import java.util.Scanner;
 
-public class RestockerInterface {
+import BusinessLogic.Item;
+import Interfaces.IOnNewItem;
+import Interfaces.IRestocker;
+
+public class RestockerInterface extends IRestocker {
     
     public void Displaymenu(){
         
@@ -56,7 +62,7 @@ public class RestockerInterface {
         System.out.println("The new quantity for: " + name + " is " + quantity);
     }
     
-    public String[] getNewItemInfo(String name){
+    public void getNewItemInfo(String name){
         
         Scanner scan = new Scanner(System.in);
         
@@ -80,15 +86,35 @@ public class RestockerInterface {
         Discount = scan.next();
         
         //Encapsulate in a string an send.
-        String[] info = new String[4];
+//        String[] info = new String[4];
+//        
+//        info[0] = Price;
+//        info[1] = Quantity;
+//        info[2] = IsAlcohol;
+//        info[3] = Discount;
+//        
+//        return info;
+        try
+        {
+        Item newItem = new Item();
+        newItem.setAlcohol(Boolean.parseBoolean(IsAlcohol));
+        newItem.setDiscount(Integer.parseInt(Discount));
+        newItem.setName(name);
+        newItem.setPrice(Double.parseDouble(Price));
+        newItem.setQuantity(Integer.parseInt(Quantity));
         
-        info[0] = Price;
-        info[1] = Quantity;
-        info[2] = IsAlcohol;
-        info[3] = Discount;
-        
-        return info;
+        for(IOnNewItem listener : this.newItemListeners) {
+        	listener.OnNewItem(newItem);
+        }
+        }
+        catch(Exception ex) {
+        	System.out.print("Could not create a new item.");
+        }
         
     }
-    
+    @Override
+    public void Warning(String messsage) {
+    	System.out.println(messsage);
+    }
+	
 }

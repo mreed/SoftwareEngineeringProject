@@ -1,6 +1,9 @@
-Milk,2.5,false,0,119
-Sausage,2.25,false,0,16
-Budlight,1.25,true,0,1998
+Milk,2.5,false,1,629
+Sausage,2.25,false,0,15
+Budlight,1.25,true,0,2398
 BudIce,2.5,true,0,39
-Coconut,4.0,false,0,100
+Coconut,4.0,false,0,110
 Wine,7.0,true,0,100
+Diet Coke,1.98,false,0,200
+Coke,1.99,false,0,200
+Pepsi,1.79,false,0,600

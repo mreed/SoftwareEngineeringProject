@@ -9,12 +9,14 @@ import javax.swing.SwingConstants;
 
 import GUI.CheckOutManager;
 import GUI.ChooseUIController;
+import GUI.ManagerController;
 import GUI.RestockerController;
 
 public class Client {
 	private CheckOutManager checkoutManager;
 	private JFrame frame;
 	private RestockerController restockerController;
+	private ManagerController managerController;
 	public JFrame GetFrame() {
 		return frame;
 	}
@@ -47,6 +49,11 @@ public class Client {
 	public void ShowRestockerInterface() {
 		restockerController = new RestockerController(this);
 		restockerController.Init();
+	}
+	public void ShowManagerInterface() {
+		managerController = new ManagerController(this);
+		managerController.Init();
+		
 	}
 
 }

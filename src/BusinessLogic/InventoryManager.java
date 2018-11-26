@@ -16,17 +16,27 @@ import Console.ItemScanner;
 import Console.RestockerInterface;
 import Interfaces.IItemScanner;
 import Interfaces.IOnItemNameScanned;
+import Interfaces.IOnNewItem;
+import Interfaces.IRestocker;
 
-public class InventoryManager implements IOnItemNameScanned {
+public class InventoryManager implements IOnItemNameScanned,IOnNewItem {
     
     
     ArrayList<Item> Items = new ArrayList<Item>();
     
     IItemScanner itemScanner = new ItemScanner();
     
-    RestockerInterface restockerInterface = new RestockerInterface();
+    IRestocker restockerInterface;
     public InventoryManager() {
     	itemScanner.addNameScanListener(this);
+    	restockerInterface = new RestockerInterface();
+    	restockerInterface.addNewItemListener(this);
+    }
+    public InventoryManager(IItemScanner scanner,IRestocker restocker) {
+    	itemScanner = scanner;
+    	itemScanner.addNameScanListener(this);
+    	restockerInterface = restocker;
+    	restocker.addNewItemListener(this);
     }
     public void ScanItems(){
 
@@ -52,6 +62,10 @@ public class InventoryManager implements IOnItemNameScanned {
 	public void OnItemNameScanned(ArrayList<String> scannedItems) {
     	  
           ArrayList<String> itemNames = new ArrayList<String>();
+        boolean haveAddedNewItem = false;
+          if(scannedItems.size() == 0) {
+        	  return; //nothing scanned
+          }
          
           try{
               
@@ -81,27 +95,30 @@ public class InventoryManager implements IOnItemNameScanned {
                   }else{
                       
                       //Get the new item information.
-                      String[] info = restockerInterface.getNewItemInfo(name);
-                      
-                      //String Name, double Price, boolean isAlcohol, int Discount, int Quantity
-                      
-                      double P = Double.parseDouble(info[0]);
-                      int Q = Integer.parseInt(info[1]);
-                      boolean Des = Boolean.parseBoolean(info[2]);
-                      int Dis = Integer.parseInt(info[3]);
-                      
-                      Items.add(new Item(name, P, Des, Dis, Q));
-                      
-                      
+                	 if(!haveAddedNewItem) { //only one new item may be entered at a time
+                		 restockerInterface.getNewItemInfo(name);
+                		 haveAddedNewItem = true;
+                	 }
+                	 else {
+                		 restockerInterface.Warning("You are attempting to add multiple new items. Only the first new item will be added.");
+                	 }
                   }
                   
               }
-              
+            
               UpdateDatabase(Items);
               
           }catch(Exception E){
               System.out.println("Exception " + E.getMessage());
           }
+		
+	}
+    @Override
+	public void OnNewItem(Item item) {
+		if(item != null && !item.getName().isEmpty()) {
+			Items.add(item);
+		}
+		UpdateDatabase(Items);
 		
 	}
     
@@ -200,6 +217,7 @@ public class InventoryManager implements IOnItemNameScanned {
         UpdateDatabase(allItems);
         
     }
+	
 
 	
     

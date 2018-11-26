@@ -7,6 +7,13 @@ import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.JLabel;
+import javax.swing.JComboBox;
+import javax.swing.JList;
+import java.awt.Font;
+import javax.swing.JTextField;
+import javax.swing.JCheckBox;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class TestInterface {
 
@@ -18,6 +25,10 @@ public class TestInterface {
 	private JButton btnCancelPayment;
 	private JLabel lblTotalDue;
 	private JLabel totalDue;
+	private JTextField name;
+	private JTextField quantity;
+	private JTextField price;
+	private JTextField discount;
 
 	public JTable getTable() {
 		return table;
@@ -72,36 +83,71 @@ public class TestInterface {
 		frame.getContentPane().add(mainPanel);
 		mainPanel.setLayout(null);
 		
-		table = new JTable();
-		table.setBounds(21, 24, 387, 528);
-		mainPanel.add(table);
-		totalDue = new JLabel("");
-		totalDue.setBounds(252, 593, 92, 14);
-		mainPanel.add(totalDue);
+		JComboBox inventorySelect = new JComboBox();
+		inventorySelect.setBounds(24, 67, 447, 55);
+		mainPanel.add(inventorySelect);
 		
-	    btnPayWithDebit = new JButton("Pay with Debit");
-		btnPayWithDebit.setBounds(430, 225, 200, 70);
-		mainPanel.add(btnPayWithDebit);
+		JLabel lblSelectItemFrom = new JLabel("Select Item from Inventory to Update");
+		lblSelectItemFrom.setBounds(27, 38, 268, 14);
+		mainPanel.add(lblSelectItemFrom);
 		
-		btnPayWithCredit = new JButton("Pay with Credit");
-		btnPayWithCredit.setBounds(643, 225, 200, 70);
-		mainPanel.add(btnPayWithCredit);
+		JPanel panel = new JPanel();
+		panel.setBounds(24, 172, 454, 200);
+		mainPanel.add(panel);
+		panel.setLayout(null);
 		
-		btnPayWithCash = new JButton("Pay with Cash");
-		btnPayWithCash.setBounds(430, 303, 200, 70);
-		mainPanel.add(btnPayWithCash);
+		JLabel lblName = new JLabel("Name");
+		lblName.setBounds(20, 20, 46, 14);
+		panel.add(lblName);
 		
-		JLabel lblSelectPaymentMethod = new JLabel("Select Payment Method");
-		lblSelectPaymentMethod.setBounds(430, 138, 413, 58);
-		mainPanel.add(lblSelectPaymentMethod);
+		JTextField ShowName = new JTextField("");
+		ShowName.setBounds(95, 20, 238, 14);
+		panel.add(ShowName);
 		
-		btnCancelPayment = new JButton("Cancel Payment");
-		btnCancelPayment.setBounds(430, 555, 200, 58);
-		mainPanel.add(btnCancelPayment);
+		JLabel lblPrice = new JLabel("Price");
+		lblPrice.setBounds(20, 54, 100, 14);
+		panel.add(lblPrice);
 		
-		lblTotalDue = new JLabel("Total Due");
-		lblTotalDue.setBounds(25, 583, 192, 34);
-		mainPanel.add(lblTotalDue);
+		JTextField ShowPrice = new JTextField("");
+		ShowPrice.setBounds(95, 54, 56, 14);
+		panel.add(ShowPrice);
+		
+		JLabel lblDiscount = new JLabel("Discount");
+		lblDiscount.setBounds(20, 88, 100, 14);
+		panel.add(lblDiscount);
+		
+		JLabel label = new JLabel("");
+		label.setBounds(95, 100, 170, 14);
+		panel.add(label);
+		
+		JLabel lblQuantity = new JLabel("Quantity");
+		lblQuantity.setBounds(20, 122, 100, 14);
+		panel.add(lblQuantity);
+		
+		JCheckBox chckbxIsAlcohol = new JCheckBox("Is Alcohol");
+		chckbxIsAlcohol.setBounds(20, 156, 97, 23);
+		panel.add(chckbxIsAlcohol);
+		
+		JTextField ShowDiscount = new JTextField("");
+		ShowDiscount.setBounds(95, 88, 56, 14);
+		panel.add(ShowDiscount);
+		
+		JTextField ShowQuantity = new JTextField("");
+		ShowQuantity.setBounds(95, 122, 56, 14);
+		panel.add(ShowQuantity);
+		
+		JButton btnOk = new JButton("Ok");
+		
+		btnOk.setBounds(24, 522, 89, 23);
+		mainPanel.add(btnOk);
+		
+		JButton btnCancel = new JButton("Cancel");
+		btnCancel.setBounds(124, 522, 89, 23);
+		mainPanel.add(btnCancel);
+		
+	
+	
+		
 		
 		
 	}

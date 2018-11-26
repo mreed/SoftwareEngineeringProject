@@ -7,6 +7,7 @@ import Console.RestockerInterface;
 public class ChooseUIView extends View {
 	private JButton customerInterfaceButton;
 	private JButton restockerInterface;
+	private JButton managerInterface;
 	
 	public ChooseUIView(JFrame frame) {
 		super(frame);
@@ -30,13 +31,19 @@ public class ChooseUIView extends View {
 		mainPanel.add(customerInterfaceButton);
 		
 		restockerInterface = new JButton("Use restocker Interface");
-		restockerInterface.setBounds(20, 20, 400, 100);
+		restockerInterface.setBounds(20, 130, 400, 100);
 		restockerInterface.setFocusPainted(false);
 		mainPanel.add(restockerInterface);
 		
-	
+		managerInterface = new JButton("Use manager Interface");
+		managerInterface.setBounds(20, 250, 400, 100);
+		managerInterface.setFocusPainted(false);
+		mainPanel.add(managerInterface);
 		
 		mainPanel.setVisible(true);
+	}
+	public JButton getManagerInterface() {
+		return managerInterface;
 	}
 
 }
